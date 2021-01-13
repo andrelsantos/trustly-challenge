@@ -69,9 +69,7 @@ public class GitHubServiceImpl implements GitHubService{
 	
 
 	private InfoFindDto findLines(String linkArchive) throws IOException {
-		
-		System.out.println(linkArchive);
-		
+				
 		WebScraping webScraping = new WebScraping(linkArchive);
 		
 		List<String> tagInfoList = webScraping.findObjectPage("text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0", "div");
@@ -85,10 +83,11 @@ public class GitHubServiceImpl implements GitHubService{
 	
 	@Override
 	public String findCommit(String linkRepository) throws IOException {
-		WebScraping webScraping = new WebScraping(linkRepository);
-		
+		WebScraping webScraping = new WebScraping(linkRepository+"/commits");
+	
 		//return webScraping.findValueObjectPage("js-details-container Details d-flex rounded-top-1 flex-items-center flex-wrap","src","div").stream().findFirst().get();
-		return webScraping.findValueObjectPage("f6 link-gray text-mono ml-2 d-none d-lg-inline","href","a").stream().findFirst().get();
+		//return webScraping.findValueObjectPage("f6 link-gray text-mono ml-2 d-none d-lg-inline","href","a").stream().findFirst().orElse(null);
+		return webScraping.findValueObjectPage("d-none js-permalink-shortcut","href","a").stream().findFirst().get();
 	}
 
 	private String findLinkMaster(String linkRepository) throws IOException {
