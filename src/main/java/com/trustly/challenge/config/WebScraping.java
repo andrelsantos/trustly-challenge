@@ -25,8 +25,8 @@ public class WebScraping {
 	}
 
 	//convert html page to string
-	public String getHtml() throws IOException{
-		
+	public String getHtml(){
+		/*
 		URL url = new URL(gitHubRepository);
 		HttpURLConnection con = null;
 		
@@ -42,6 +42,23 @@ public class WebScraping {
 		}finally {
 			con.disconnect();
 		}
+		*/
+		try {
+			URL url = new URL(gitHubRepository);
+			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+			if (con.getResponseCode() != 200) {
+				throw new IOException("HTTP error code : "+ con.getResponseCode());
+			}
+
+			BufferedReader br = new BufferedReader(new InputStreamReader((con.getInputStream())));
+			
+			return br.lines().collect(Collectors.joining(" "));
+		}catch(IOException e) {
+			//refatoring in case of page access error
+			return "";
+		}
+		
+		
 
 		
 	    
