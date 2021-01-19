@@ -54,8 +54,9 @@ public class WebScraping {
 			
 			return br.lines().collect(Collectors.joining(" "));
 		}catch(IOException e) {
-			//refatoring in case of page access error
-			return "";
+			//in case of page access error
+			System.out.println("error acess page! " + e.getMessage()+ " " + gitHubRepository);
+			return getHtml();
 		}
 		
 		
